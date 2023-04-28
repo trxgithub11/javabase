@@ -32,8 +32,21 @@ public class StreamDemo {
 //        testReduce3(authors);
 //        testReduce4(authors);
 //        testAnd(authors);
-        test11(authors);
+//        test11(authors);
+        test12(authors);
 
+    }
+
+    private static void test12(List<Author> authors) {
+
+        //并行流
+//        authors.parallelStream();
+        Stream<Integer> stream = Stream.of(1,2,3,4,5,6,7,8,9,10);
+        Integer sum = stream.parallel()
+                .peek(integer -> System.out.println(integer+Thread.currentThread().getName()))
+                .filter(result -> result > 5)
+        .reduce((result, integer2) -> result + integer2).get();
+        System.out.println(sum);
     }
 
     private static void test11(List<Author> authors) {
