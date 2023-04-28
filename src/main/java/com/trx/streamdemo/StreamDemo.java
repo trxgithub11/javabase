@@ -1,10 +1,7 @@
 package com.trx.streamdemo;
 
 import java.util.*;
-import java.util.function.BinaryOperator;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.function.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,7 +30,41 @@ public class StreamDemo {
 //        testReduce(authors);
 //        testReduce2(authors);
 //        testReduce3(authors);
-        testReduce4(authors);
+//        testReduce4(authors);
+//        testAnd(authors);
+        test11(authors);
+
+    }
+
+    private static void test11(List<Author> authors) {
+
+        authors.stream()
+                .map(author -> author.getAge())
+                .map(age -> age+10)
+                .filter(integer -> integer>18)
+                .map(age -> age+2)
+                .forEach(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer x) {
+                        System.out.println(x);
+                    }
+                });
+        authors.stream()
+                .mapToInt(value -> value.getAge())
+                .map(operand -> operand+10)
+                .filter(value -> value>18)
+                .map(operand -> operand + 2)
+                .forEach(System.out::println);
+    }
+
+
+    private static void testAnd(List<Author> authors) {
+
+        authors.stream()
+                .filter(((Predicate<Author>) author -> author.getAge() > 17)
+                        .and(author -> author.getName().length()>1))
+                .forEach(author -> System.out.println(author.getName()+"||"+author
+                .getAge()));
     }
 
     private static void testReduce4(List<Author> authors) {
